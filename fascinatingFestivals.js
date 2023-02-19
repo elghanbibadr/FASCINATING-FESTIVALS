@@ -13,6 +13,18 @@ const fetchData = async (url) => {
   return data;
 }
 
+// update the html of an elmenet according to the data of slide
+const updateSlideHtml=(element,slideName) =>{
+   slideName.innerHTML=`<div class='createdSlide'>
+   <div>
+       <h3>${element.where}</h3>
+                <p >${element.content_text}</p>
+   </div>
+  <div class="image-wrraper"><img  src=${imagesUrl+element.image}>  </div>
+  </div>   
+  `
+ }
+ 
 
 // fetch all the slideShow topic data
 const getSlideShowTopic = async () => {
@@ -27,43 +39,30 @@ const getSlideShowSlides = async () => {
 
 
 
-// lets create the 10 romantic place slide show
+// lets create fascinating festivals slide show
 const createSlideShow = async () => {
   // grab all the slides show topics
   const { data: slideShowsTopic } = await getSlideShowTopic()
   console.log(slideShowsTopic)
-  // get theBEST RAIL JOURNEYS  slideshow data
-  const BEST_RAIL_JOURNEYS = slideShowsTopic[2]
-  console.log(BEST_RAIL_JOURNEYS )
+  // get fascinating festivals slideshow data
+  const fascinatingFestivals = slideShowsTopic[2]
   //
   const { data: slideShowSlides } = await getSlideShowSlides()
-  const { slideshow_slides } = BEST_RAIL_JOURNEYS;
+  const { slideshow_slides } = fascinatingFestivals
 
-  // filter the list of slidesshow to get only the slides relevent to 10 romantic places data
+  // filter the list of slidesshow to get only the slides relevent to fasinating festivals
 const slideForTheCurrentSlidShow = slideShowSlides.filter(element => slideshow_slides.includes(element.id))
    slideForTheCurrentSlidShow.forEach((element,index) => { 
     if (index===0) {
         slideTwo.id=element.id
-        slideTwo.innerHTML=`<div class='createdSlide'>
-        <p >${element.content_text}</p>
-        <div class="image-wrraper"><img  src=${imagesUrl+element.image}>  </div>
-        </div>   
-        `
+        updateSlideHtml(element,slideTwo)
        return
     }
    
     const addedSlide=document.createElement('section');
     addedSlide.id=element.id
-    addedSlide.innerHTML=`<div class='createdSlide'>
-          <div>
-              <h3>${element.where}</h3>
-                       <p >${element.content_text}</p>
-          </div>
-         <div class="image-wrraper"><img  src=${imagesUrl+element.image}>  </div>
-         </div>   
-         `
+      updateSlideHtml(element,addedSlide)
         slidesContainer.insertAdjacentElement( 'beforeend', addedSlide)
-        // addedSlide.classList.add('createdSlide')
     })
 
 }
