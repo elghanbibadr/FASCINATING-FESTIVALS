@@ -8,9 +8,8 @@
   "module": "dist/reveal.esm.js",
   "license": "MIT",
   "scripts": {
-    "test": "gulp test",
-    "start": "gulp serve",
-    "build": "gulp build"
+    "start": "parcel",
+    "build": "parcel build"
   },
   "author": {
     "name": "Hakim El Hattab",
